@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && add-apt-repository "deb https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
     && apt-get update && apt-get install -y --no-install-recommends \
         docker-ce docker-ce-cli containerd.io \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && update-alternatives --set iptables /usr/sbin/iptables-legacy
 
 COPY hostapp.sh /usr/bin/
 ENTRYPOINT ["/usr/bin/hostapp.sh"]
