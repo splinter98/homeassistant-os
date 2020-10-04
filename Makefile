@@ -19,12 +19,21 @@ endif
 
 .NOTPARALLEL: $(TARGETS) $(TARGETS_CONFIG) all
 
-.PHONY: $(TARGETS) $(TARGETS_CONFIG) all clean help
+.PHONY: $(TARGETS) $(TARGETS_CONFIG) all clean help menuconfig
 
 all: $(TARGETS)
 
 $(RELEASE_DIR):
 	mkdir -p $(RELEASE_DIR)
+
+menuconfig:
+	$(MAKE) -C $(BUILDROOT) BR2_EXTERNAL=$(BUILDROOT_EXTERNAL) "menuconfig"
+
+linuxconfig:
+	$(MAKE) -C $(BUILDROOT) BR2_EXTERNAL=$(BUILDROOT_EXTERNAL) "linux-menuconfig"
+
+ubootconfig:
+	$(MAKE) -C $(BUILDROOT) BR2_EXTERNAL=$(BUILDROOT_EXTERNAL) "uboot-menuconfig"
 
 $(TARGETS_CONFIG): %-config:
 	@echo "config $*"
