@@ -8,8 +8,8 @@ function create_ota_update() {
     local kernel="${BINARIES_DIR}/kernel.ext4"
     local rootfs="${BINARIES_DIR}/rootfs.squashfs"
     local spl="${BINARIES_DIR}/spl.img"
-    local key="/build/key.pem"
-    local cert="/build/cert.pem"
+    local key="${BR2_EXTERNAL_HASSOS_PATH}/../key.pem"
+    local cert="${BR2_EXTERNAL_HASSOS_PATH}/../cert.pem"
     local keyring="${TARGET_DIR}/etc/rauc/keyring.pem"
 
     # Skip if no dev key is arround
@@ -52,5 +52,5 @@ function create_ota_update() {
         ) >> "${rauc_folder}/manifest.raucm"
     fi
 
-    rauc bundle -d --cert="${cert}" --key="${key}" --keyring="${keyring}" "${rauc_folder}" "${ota_file}"
+    rauc bundle -d -c "${TARGET_DIR}/etc/rauc/system.conf" --cert="${cert}" --key="${key}" --keyring="${keyring}" "${rauc_folder}" "${ota_file}"
 }

@@ -11,6 +11,7 @@ function _create_rauc_header() {
 
         echo "[keyring]"
         echo "path=/etc/rauc/keyring.pem"
+        echo "check-purpose=codesign"
     ) > "${TARGET_DIR}/etc/rauc/system.conf"
 }
 
